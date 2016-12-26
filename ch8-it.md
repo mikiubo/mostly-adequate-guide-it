@@ -50,7 +50,7 @@ Le ragioni di tutto ciò diventeranno chiare come il sole, ma per ora, abbiate p
 
 ## Il mio primo Funtore
 
-Una volta che il nostro valore ( qualunque esso sia ) è inserito nel Container ci serve un modo per eseguire funzioni su di esso.
+Una volta che il nostro valore ( qualunque esso sia ) è inserito nel `Container` ci serve un modo per eseguire funzioni su di esso.
 
 ```js
 // (a -> b) -> Container a -> Container b
@@ -58,7 +58,7 @@ Container.prototype.map = function(f) {
   return Container.of(f(this.__value));
 }
 ```
-Perchè, è quasi come il famoso metodo 'map' dell' oggetto Array, al posto di '[a]' abbiamo 'Container of'. Essenzialmente funziona nello stesso modo:
+Sembra quasi come il famoso metodo `map` dell' oggetto `Array`, al posto di `[a]` abbiamo `Container of`. Essenzialmente funziona nello stesso modo:
 
 ```js
 Container.of(2).map(function(two) {
@@ -76,21 +76,21 @@ Container.of("flamethrowers").map(function(s) {
 Container.of("bombs").map(_.concat(' away')).map(_.prop('length'));
 //=> Container(10)
 ```
-Siamo in grado di lavorare con il nostro valore, senza mai dover lasciare il `Container`. Il nostro valore nel `Container` è passato alla funzione `map` ( così possiamo pasticciarci ) e poi restituito al suo Container per un salvataggio sicuro. Il valure non lascia mail il `Container`, così possiamo continuare a `map`are le funzioni come ci pare. Possiamo anche cambiare il tipo mentre procediamo come dimostrato nell' ultimo dei tre esempi.
+Siamo in grado di lavorare con il nostro valore, senza mai dover lasciare il `Container`. Il valore nel `Container` è passato alla funzione `map` ( che può pasticcirci come vuole ) e successivamente restituito al suo `Container` che lo tiene al sicuro. Il valore non lascia mai il `Container`, così possiamo continuare a `map`arci sopra funzioni come ci pare. Possiamo anche cambiarne il tipo come dimostrato nell' ultimo dei tre esempi.
 
 Aspetta un minuto, questo continuo chiamare `map`, ricorda una sorta di composizione! Che magia matematica è questa? Bene, abbiamo appena scoperto i *Funtori*.
 
 > Un funtore è un tipo che implementa `map` e obbedisce alcune leggi
 
-Sì, *Functor* è semplicemente un'interfaccia con un contratto. Potremmo chiamarli *Mappable*, ma ora, stà il *Fun* ( divertimento gioco di parole ) in questo? I Funtori provengono dalla teoria delle categorie, noi guarderemo la matematica in dettaglio verso la fine del capitolo, ma, per ora, cerchiamo di lavorare su intuizione e usi pratici per questa interfaccia chiamata in modo così bizzarro.
+Sì, *Functor* è semplicemente un'interfaccia con un contratto. Potremmo chiamarli *Mappable*, ma dove sarebbe il *Fun* ( divertimento gioco di parole ) in questo? I Funtori provengono una branca della matematica: la teoria delle categorie, c'è un paragrafo più dettegliato alla fine del capitolo. Per ora, cercheremo di lavorare sull' intuizione e vedere alcuni usi pratici per questa interfaccia chiamata in modo così bizzarro.
 
-Che motivo avremmo potuto avere per imbottigliare un valore e l'utilizzare di `map` per raggiungerlo? La risposta si capisce subito se si sceglie una domanda migliore: Che cosa ci guadagno dal chiedere il nostro Container di applicare funzioni per noi? Ebbene, l'astrazione dell' applicazione delle funzioni. Quando `map`iamo una funzione, chiediamo al tipo di Container di eseguirla per noi. Questo è un concetto molto potente.
+Che abbiamo di imbottigliare un valore e utilizzare `map` per raggiungerlo? Per rispondere, occorre pensare ad un' altra domanda: Che cosa ci guadagno dal chiedere al nostro Container di applicare funzioni per noi? Ebbene, l'astrazione dell' applicazione delle funzioni. Quando `map`iamo una funzione, chiediamo al tipo di Container di eseguirla per noi. Questo è un concetto molto potente.
 
-## Schrödinger's Maybe
+## Il Maybe di Schrödinger
 
 <img src="images/cat.png" alt="cool cat, need reference" />
 
-`Container` è abbastanza noioso. In realtà, di solito è chiamato `Identity` e ha circa lo stesso impatto come della funzione 'id' (di nuovo c'è una connessione matematica, la vedremo quando sarà il momento giusto ). Tuttavia, ci sono altri funtori, cioè tipi di Container che hanno una specifica `funzione map`, che fornisce un comportamento utile durante la mappatura. Definiamo uno ora.
+`Container` è abbastanza noioso. In realtà, di solito è chiamato `Identity` e ha circa lo stesso impatto come della funzione `id` ( di nuovo c'è una connessione con la matematica, la vedremo quando sarà il momento giusto ). Tuttavia, ci sono altri funtori, cioè tipi di Container che hanno una specifica funzione `map`, che fornisce un comportamento utile durante la mappatura. Definiamone uno ora.
 
 ```js
 var Maybe = function(x) {
@@ -110,7 +110,7 @@ Maybe.prototype.map = function(f) {
 };
 ```
 
-Ora, `Maybe` assomiglia molto a `Container` con una piccola modifica: prima di chiamare la funzione fornita verifica se effettivamente contiene un valore. Questo ha l'effetto di evitare quei fastidiosi valori 'null' mentre `map`piamo (Si noti che questa implementazione è semplificata per l'insegnamento).
+Ora, `Maybe` assomiglia molto a `Container` con una piccola modifica: prima di chiamare la funzione fornita verifica se effettivamente contiene un valore. Questo ha l'effetto di evitare quei fastidiosi valori `null` mentre `map`piamo (Si noti che questa è la versione semplificata per scopi didattici).
 
 ```js
 Maybe.of('Malkovich Malkovich').map(match(/a/ig));
@@ -131,7 +131,7 @@ Maybe.of({
 //=> Maybe(24)
 ```
 
-Notare che la nostra applicazione non scoppia per gli errori mentre mappiamo le funzioni sui nostri valori nulli. Questo perché `Maybe` avrà cura di verificare la presenza di un valore ogni volta che si applica una funzione.
+La nostra applicazione non scoppia per gli errori mentre mappiamo le funzioni sui nostri valori nulli. Questo perché `Maybe` si preoccupa di verificare la presenza di un valore ogni volta che si applica una funzione.
 
 Questa sintassi con la dot notation è perfettamente giusta e funzionale, ma per ragioni viste nella parte 1, vorremmo mantenere il nostro stile pointfree. Si dà il caso che `map` sia perfettamente attrezzato per delegare a qualunque funtore che riceve:
 
@@ -141,11 +141,11 @@ var map = curry(function(f, any_functor_at_all) {
   return any_functor_at_all.map(f);
 });
 ```
-Questo è delizioso in questo modo siamo in grado di usare la composizione e `map` funzionerà come previsto. Questo è il caso di `map` implementato nella libreria Ramda. Useremo la dot notation quando è istruttivo e la versione pointfree quando è conveniente. Ho furtivamente introdotto una notazione in più nella nostra firma tipo. Funtor F `=>` ci informa che `f` deve essere un Functor.
+In questo modo siamo in grado di usare la composizione e `map` funzionerà come previsto. Questo è il caso di `map` implementato nella libreria Ramda. Useremo la dot notation quando è istruttivo e la versione pointfree quando è conveniente. Ho furtivamente introdotto una notazione in più nella nostra type signature. Funtor F `=>` ci informa che `F` deve essere un funtore.
 
-## Use cases
+## Casi d' uso
 
-In natura, si può vedere un `Maybe` nel suo habitat naturale: usato in funzioni che dovrebbero ritornare un valore ma potrebbero fallire.
+`Maybe` viene usato quando ci sono funzioni che dovrebbero ritornare un valore ma potrebbero fallire.
 
 ```js
 //  safeHead :: [a] -> Maybe(a)
@@ -169,7 +169,7 @@ streetName({
 // Maybe("Shady Ln.")
 ```
 
-`SafeHead` è come il nostro normale` _.head`, ma con l' aggiunta della sicurezza di tipo. Una cosa curiosa accade quando `Maybe` viene introdotto nel nostro codice; siamo costretti a fare i conti con quei subdoli valori `null`. La funzione `safeHead` è onesta e anticipa i suoi possibili fallimenti: restituisce un `Maybe` per informarci di questa possibilità. In reltà siamo più che semplicemente informati, infatti siamo costretti a `map`pare per ottenere il valore che vogliamo dal momento che è nascosto dentro l'oggetto `Maybe`. In sostanza, si tratta di un 'null' check forzata dalla funzione 'safeHead' stessa. Ora possiamo dormire sonni tranquilli sapendo nessun `null` sollevarà la sua ripugnante testa decapitata quando meno ce lo aspettiamo. API come questa trasformano un'applicazione fragile di carta e puntine in una robusta di legno e chiodi. Esse garantiranno software più sicuro.
+`SafeHead` è come il nostro normale` _.head`, ma con l' aggiunta della sicurezza di tipo. Una cosa curiosa accade quando `Maybe` viene introdotto nel nostro codice; siamo costretti a fare i conti con quei subdoli valori `null`. La funzione `safeHead` è onesta e anticipa i suoi possibili fallimenti: restituisce un `Maybe` per informarci di questa possibilità. In reltà siamo più che semplicemente informati, infatti siamo costretti a `map`pare per ottenere il valore che vogliamo dal momento che è nascosto dentro l'oggetto `Maybe`. In sostanza, si tratta di un `null check` forzato dalla funzione `safeHead` stessa. Ora possiamo dormire sonni tranquilli sapendo nessun `null` sollevarà la sua ripugnante testa decapitata quando meno ce lo aspettiamo. API come questa trasformano un' applicazione fragile di carta e puntine in una robusta di legno e chiodi. Quindi garantiscono software più sicuro.
 
 A volte una funzione potrebbe restituire un `Maybe(null)` esplicitamente per segnalare un fallimento. Per esempio:
 
@@ -201,13 +201,13 @@ getTwenty({
 // Maybe(null)
 ```
 
-Se siamo a corto di denaro `Withdraw` ritorna `Maybe(null)`. Questa funzione comunica anche la sua instabilità e non ci lascia altra scelta che `map`pare tutto dopo. Qui `Null` era intenzionale. Invece di un `Maybe(String) `, otteniamo un `Maybe(null)` per segnalare guasti e la nostra applicazione si arresta in modo efficace. Questo è importante da notare: se non riesce il `withdraw`, allora `map` taglierà il resto della nostra computazione in quanto non eseguirà la funzione mappata 'finishTransaction`. Questo è esattamente il comportamento che vorremmo ottenere: se non avessimo ritirato con successo fondi, preferiremmo non aggiornare il nostro libro mastro o mostrare un nuovo bilancio.
+Se siamo a corto di denaro `Withdraw` ritorna `Maybe(null)`. Questa funzione comunica anche la sua instabilità e non ci lascia altra scelta che `map`pare tutto alla fine. Qui `Null` era intenzionale. Invece di un `Maybe(String) `, otteniamo un `Maybe(null)` per segnalare guasti e la nostra applicazione si arresta in modo efficace. Importante da notare: se non riesce il `withdraw`, allora `map` taglierà il resto della nostra computazione in quanto non eseguirà la funzione mappata 'finishTransaction`. Questo è esattamente il comportamento che vorremmo ottenere: se non avessimo ritirato con successo fondi, preferiremmo non aggiornare il nostro libro mastro o mostrare un nuovo bilancio.
 
-## Releasing the value
+## Rilascio del valore
 
-Una cosa che spesso si dimentica è che c'è sempre una fine della linea; una funzione che produce qualcosa: invia JSON, stampa a schermo, alera il filesystem o chi più ne ha più ne metta. Non possiamo inviare l' output con 'return' dobbiamo eseguire una funzione che lo spedisca fuori nel mondo. Come disse il Buddista Zen koan:"Se un programma non ha effetti osservabili allora è davvero in escuzione?". Funziona solo per la propria soddisfazione? Io sospetto che serva solo a bruciare qualche ciclo per poi tornarsene a dormire.
+Una cosa che spesso si dimentica è che c'è sempre una fine della linea; una funzione che produce qualcosa: invia JSON, stampa a schermo, altera il filesystem o chi più ne ha più ne metta. Non possiamo inviare l' output con `return` dobbiamo eseguire una funzione che lo spedisca fuori nel mondo esterno. Come disse il Buddista Zen koan: "Se un programma non ha effetti osservabili allora è davvero in escuzione?". Funziona solo per la propria soddisfazione personale? Io sospetto che serva solo a bruciare qualche ciclo per poi tornarsene a dormire.
 
-Il lavoro della nostra applicazione è quello di recuperare, trasformare e trasportare i dati fino a quando è il momento di dir loro addio, la funzione che fa questo può essere mappata, quindi il valore non deve neanche lasciare il grembo caldo del suo contenitore. In effetti, un errore comune è quello di cercare di rimuovere il valore della nostra `Maybe` in un modo o nell'altro, come se improvvisamente si materializzi per incanto. Dobbiamo capire che potrebbe esserci un ramo di codice dove il nostro valore non è sopravvissuto al suo destino. Il nostro codice, proprio come il gatto di Schrödinger, è in due stati contemporaneamente e deve mantenere questa condizione fino alla funzione finale. Questo dà il nostro codice un flusso lineare nonostante la ramificazione logica.
+Il lavoro della nostra applicazione è quello di recuperare, trasformare e trasportare i dati fino a quando è il momento di dir loro addio, la funzione che fa questo può essere mappata, quindi il valore non deve neanche lasciare il grembo caldo del suo contenitore. In effetti, un errore comune è quello di cercare di rimuovere il valore della nostra `Maybe` in un modo o nell'altro, come se improvvisamente si materializzi per incanto. Dobbiamo però ricordare che potrebbe esserci un ramo di codice dove il nostro valore non è sopravvissuto al suo destino. Il nostro codice, proprio come il gatto di Schrödinger, è in due stati contemporaneamente e deve mantenere questa condizione fino alla funzione finale. Questo dà il nostro codice un flusso lineare nonostante la ramificazione logica.
 
 Vi è, tuttavia, una via di fuga. Se volessimo restituire un valore personalizzato e proseguire, si potremmo utilizzare un piccolo aiutante chiamato `Maybe`.
 
@@ -233,19 +233,20 @@ getTwenty({
 });
 // "You're broke!"
 ```
+
 Ora noi potremmo o restituire un valore statico (dello stesso tipo che ritorna 'finishTransaction' ) oppure continuare finendo allegramente la transazione senza 'Maybe'. Con 'Maybe' assistiamo ad un analogo di un 'if/else' mentre con 'map' l' analogo imperativo sarebbe: 'if (x !== null) { return f(x) }'.
 
-L'introduzione di `Maybe` può causare qualche disagio iniziale. Gli utenti di Swift e Scala sanno cosa intendo: è integrato direttamente nelle librerie di base sotto la maschera di `Opzion(al)`. Quando bisogna gestire `null` check dappertutto (e ci sono casi in cui sappiamo con assoluta certezzache il valore esiste), la maggior parte delle persone non hanno altra scelta ma sentono comunque la difficoltà di scrivere un tale codice. Tuttavia, con il tempo, diventerà una seconda natura ed è probabile che si cominci ad apprezzarne la sicurezza. Alla fine porterà a evitere angoli taglienti e salvarci la pelle.
+L'introduzione di `Maybe` può causare qualche disagio iniziale. Gli utenti di Swift e Scala sanno cosa intendo: è integrato direttamente nelle librerie di base sotto la maschera di `Opzion(al)`. Quando bisogna gestire `null check` dappertutto (e ci sono casi in cui sappiamo con assoluta certezzache il valore esiste), la maggior parte delle persone non hanno altra scelta ma sentono comunque la difficoltà di scrivere un tale codice. Tuttavia, con il tempo, diventerà una seconda natura ed è probabile che si cominci ad apprezzarne la sicurezza. Alla fine porterà a evitere angoli taglienti e salvarci la pelle.
 
 Scrivere software non sicuro è come dipingere ogni uovo con pastelli e poi tirarli nel traffico; come costruire la casa con materiali dei primi due protagonisti della favola dei tre porcellini. Si fa sempre bene a mettere un po' di sicurezza nelle nostre funzioni e `Maybe` ci aiuta a fare proprio in questo.
 
-L' implementazione reale divide 'Maybe' in due tipi: uno per qualcosa e l'altro per niente. Questo ci permette di gestirli parametricamente in `map` così valori come `null` e 'undefined' potranno ancora essere mappati e la qualificazione universale di funtore sarà rispettata. Si vedono spesso tipi come `Some(x)/None` o `Just(x)/Nothing` invece di un `Maybe` che fa un `null` check sui suoi valori.
+L' implementazione reale divide `Maybe` in due tipi: uno per qualcosa e l'altro per niente. Questo ci permette di gestirli parametricamente in `map` così valori come `null` e `undefined` potranno ancora essere mappati e la qualificazione universale di funtore sarà rispettata. Si vedono spesso tipi come `Some(x)/None` o `Just(x)/Nothing` invece di un `Maybe` che fa solo un `null check` sui suoi valori.
 
-## Pure Error Handling
+## Error Handling Puro
 
 <img src="images/fists.jpg" alt="pick a hand... need a reference" />
 
-potrebbe sembrare scioccante ma il 'try/catch' non è molto puro. Quando avviene un errore, al posto di restituire un valore di output, partono gli allarmi! La funzioni attaccano vomitando migliaia di 0 e 1 come in una battaglia all' ultimo sangue contro l' imput immesso dall' utente. Con il nostro nuovo amico 'Either' possiamo fare di meglio che dichiarare guerra all' input, possimo rispondere con un messaggio diplomatico. Diamo un occhiata:
+potrebbe sembrare scioccante ma il `try/catch` non è molto puro. Quando avviene un errore, al posto di restituire un valore di output, partono gli allarmi! La funzioni attaccano vomitando migliaia di 0 e 1 come in una battaglia all' ultimo sangue contro l' imput immesso dall' utente. Con il nostro nuovo amico `Either` possiamo fare di meglio che dichiarare guerra all' input, possimo rispondere con un messaggio diplomatico. Diamo un occhiata:
 
 ```js
 var Left = function(x) {
@@ -273,7 +274,7 @@ Right.prototype.map = function(f) {
 }
 ```
 
-`Left` e `Right` sono due sottoclassi un tipo astratto che chiamiamo `Either`. Ho saltato la cerimonia di creare la superclasse `Either` dato che non la useremo mai, ma è bene essere consapevoli. Ora, non c'è niente di nuovo qui, oltre i due tipi. Vediamo come si comportano:
+`Left` e `Right` sono due sottoclassi un tipo astratto che chiamiamo `Either`. Ho saltato la cerimonia di creare la superclasse `Either` dato che non la useremo mai, ma è bene esserne consapevoli. Ora, non c'è niente di nuovo, oltre i due tipi. Vediamo come si comportano:
 
 ```js
 Right.of('rain').map(function(str) {
@@ -296,7 +297,7 @@ Left.of('rolls eyes...').map(_.prop('host'));
 // Left('rolls eyes...')
 ```
 
-`Left` è come un teenager in crisi e ignora tutte le nostre richieste `map`. `Right` funzionera proprio come` Container` (a.k.a identità). La figata del procedimento deriva dalla capacità di incorporare un messaggio di errore all'interno del `Left`.
+`Left` è come un teenager in crisi e ignora tutte le nostre richieste `map`. `Right` funzionera proprio come `Container` (a.k.a identità). La figata del procedimento deriva dalla capacità di incorporare un messaggio di errore all'interno del `Left`.
 
 Supponiamo di avere una funzione che potrebbe non avere successo, per esempio quella che restituisce l'età data la data di nascita. Potremmo usare `Maybe(null)` per segnalare guasti e creare un nuovo ramo del nostro programma, tuttavia, non ci dice molto. Ci piacerebbe sapere cosa è andato storto. Proviamo scriverlo con `Either`.
 
