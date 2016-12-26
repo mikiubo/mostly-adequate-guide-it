@@ -1,13 +1,13 @@
-# Chapter 8: Tupperware
+# Capitolo 8: Tupperware
 
-## The Mighty Container
+## Il Potente Container
 
 <img src="images/jar.jpg" alt="http://blog.dwinegar.com/2011/06/another-jar.html" />
 
 Abbiamo visto come scrivere programmi che concatenano i dati attraverso una serie di funzioni pure.
-Queste risultano enunciati dichiarativi che ne specificano il comportamento. Ma per quanto riguarda il controllo di flusso, la gestione degli errori, comportamento asincrono, stato e, per carità, gli effetti?! In questo capitolo, scopriremo il fondamento su cui tutte queste utili astrazioni sono costruite.
+Queste risultano enunciati dichiarativi che ne specificano il comportamento. Ma per quanto riguarda il controllo di flusso, la gestione degli errori, comportamento asincrono, gli stato e, mi consenta(Berlusca), gli effetti collaterali?! In questo capitolo, scopriremo lo strumento fondamentale per costruire queste astrazioni.
 
-Per prima cosa creeremo un contenitore. Questo contenitore dovrà contenere valori di qualsiasi tipo; un sacchetto che contiene solo budino alla tapioca è utile solo raramente. Questo contenitore sarà un oggetto ma non gli daremo proprietà e metodi nel senso della programmazone OO. Piuttosto lo tratteremo come uno scrigno del tesoro - una scatola speciale che custodità i nostri dati di valore
+Per prima cosa creeremo un contenitore. Questo contenitore è un oggetto che contiene valori di qualsiasi tipo (non può contenere solo budini) ma non gli daremo proprietà e metodi nel senso della programmazone OO. Piuttosto lo tratteremo come uno scrigno del tesoro - una scatola speciale che custodità i nostri dati di valore
 
 ```js
 var Container = function(x) {
@@ -17,9 +17,9 @@ var Container = function(x) {
 Container.of = function(x) { return new Container(x); };
 ```
 
-Ecco il nostro primo contenitore. Giustamente l' Abbiamo chiamato `Container`. Useremo 'Container.of' come un costruttore che ci evita di dover scrivere che Dio ce ne scampi la parola chiave 'new' dappertutto. In realtà la funzione 'of' è molto di più di quello che sembra, ma per ora, pensaremo ad essa come il modo corretto di mettere i valori nel nostro contenitore.
+Ecco il nostro primo contenitore. Giustamente l' Abbiamo chiamato `Container`. Useremo `Container.of` come un costruttore che ci evita di scrivere (che Dio ce ne scampi) `new` dappertutto. In realtà la funzione `of` è molto di più di quello che sembra ma, per ora, pensaremo ad essa come il modo corretto di mettere i valori nel nostro contenitore.
 
-Esaminiamo la nostra nuova scatola di marca ...
+Esaminiamo la nostra nuova scatola magica ...
 
 ```js
 Container.of(3);
@@ -42,11 +42,11 @@ Mettiamo un paio di cose in chiaro prima di procedere:
 
 * `Container` è un oggetto con una proprietà. Un sacco di contenitori contengono una sola cosa, sebbene non siano limitati a una. Abbiamo arbitrariamente chiamato la sua proprietà `__value`.
 
-* `__value` non può essere uno tipo specifico o il nostro` Container` difficilmente sarà all'altezza del nome.
+* `__value` non può essere uno tipo specifico o il nostro `Container` difficilmente sarà all'altezza del nome.
 
 * Una volta che i dati vanno nel `Container` rimangono lì. Noi *potremmo* toglierlo usando `.__ value`, ma questo vanificherebbe l'obiettivo.
 
-Le ragioni di tutto ciò diventernno chiare come il pane, ma per ora, appi pazienza.
+Le ragioni di tutto ciò diventeranno chiare come il sole, ma per ora, abbiate pazienza.
 
 ## Il mio primo Funtore
 
@@ -385,7 +385,7 @@ Infine, un utilizzo della misteriosa funzione `id`. Essa ripete a pappagallo il 
 
 <img src="images/dominoes.jpg" alt="dominoes.. need a reference" />
 
-Nel nostro capitolo sulla purezza abbiamo visto un esempio peculiare di una funzione pura. Questa funzione conteneva un effetto collaterale, ma l' abbiamo resa puro avvolgendo la sua azione in un'altra funzione. Ecco un altro esempio di questo:
+Nel nostro capitolo sulla purezza abbiamo visto una funzione che conteneva un effetto collaterale, ma, siamo riusciti a renderla pura avvolgendo la sua azione in un'altra funzione. Eccne un altro esempio:
 
 ```js
 //  getFromStorage :: String -> (_ -> String)
