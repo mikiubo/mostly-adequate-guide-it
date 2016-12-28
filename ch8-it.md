@@ -743,7 +743,8 @@ var ex1 = undefined
 
 // Exercizio 2
 // ==========
-// Usa _.head per ottenere il primo elemento della lista
+// Usa _.head per ottenere il primo elemento della lista.
+
 var xs = Identity.of(['do', 'ray', 'me', 'fa', 'so', 'la', 'ti', 'do']);
 
 var ex2 = undefined
@@ -752,7 +753,8 @@ var ex2 = undefined
 
 // Esercizio 3
 // ==========
-// Usa safeProp e _.head per trovare la prima iniziale dell' utente
+// Usa safeProp e _.head per trovare la prima iniziale dell' utente.
+
 var safeProp = _.curry(function (x, o) { return Maybe.of(o[x]); });
 
 var user = { id: 2, name: "Albert" };
@@ -762,7 +764,7 @@ var ex3 = undefined
 
 // Esercizio 4
 // ==========
-// Usa Maybe per riscrivere l' esercizio 4 senza 'if'
+// Usa Maybe per riscrivere l' esercizio 4 senza il costrutto 'if'.
 
 var ex4 = function (n) {
   if (n) { return parseInt(n); }
@@ -774,7 +776,8 @@ var ex4 = undefined
 
 // Esercizio 5
 // ==========
-// scrivi una funzione che prende un post(getPost) e successivamente metta in maiusolo(toUpperCase) il titolo
+// scrivi una funzione che prende un post (getPost) 
+// e metta in maiusolo(toUpperCase) il titolo.
 
 // getPost :: Int -> Future({id: Int, title: String})
 var getPost = function (i) {
@@ -791,8 +794,9 @@ var ex5 = undefined
 
 // Esercizio 6
 // ==========
-// Scrivi una funzione che usi checkActive() e showWelcome() per garantire l' accesso
-// oppure restituisce un errore
+// Scrivi una funzione che usa checkActive() per controllare le credenziali,
+// se avviene l' accesso esegue showWelcome(),
+// altrimenti restituisce un errore.
 
 var showWelcome = _.compose(_.add( "Welcome "), _.prop('name'))
 
