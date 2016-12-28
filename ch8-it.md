@@ -725,34 +725,34 @@ chiamare una funzione con più funtori come argomenti? lavorare con una sequenza
 
 [Chapter 9: Monadic Onions](ch9.md)
 
-## Exercises
+## Esercizi
 
 ```js
 require('../../support');
 var Task = require('data.task');
 var _ = require('ramda');
 
-// Exercise 1
+// Esercizio 1
 // ==========
-// Use _.add(x,y) and _.map(f,x) to make a function that increments a value
-// inside a functor
+// Usa _.add(x,y) e _.map(f,x) per creare una funzione che incrementa un valore 
+// dentro un funtore
 
 var ex1 = undefined
 
 
 
-//Exercise 2
+// Exercizio 2
 // ==========
-// Use _.head to get the first element of the list
+// Usa _.head per ottenere il primo elemento della lista
 var xs = Identity.of(['do', 'ray', 'me', 'fa', 'so', 'la', 'ti', 'do']);
 
 var ex2 = undefined
 
 
 
-// Exercise 3
+// Esercizio 3
 // ==========
-// Use safeProp and _.head to find the first initial of the user
+// Usa safeProp e _.head per trovare la prima iniziale dell' utente
 var safeProp = _.curry(function (x, o) { return Maybe.of(o[x]); });
 
 var user = { id: 2, name: "Albert" };
@@ -760,9 +760,9 @@ var user = { id: 2, name: "Albert" };
 var ex3 = undefined
 
 
-// Exercise 4
+// Esercizio 4
 // ==========
-// Use Maybe to rewrite ex4 without an if statement
+// Usa Maybe per riscrivere l' esercizio 4 senza 'if'
 
 var ex4 = function (n) {
   if (n) { return parseInt(n); }
@@ -772,9 +772,9 @@ var ex4 = undefined
 
 
 
-// Exercise 5
+// Esercizio 5
 // ==========
-// Write a function that will getPost then toUpperCase the post's title
+// scrivi una funzione che prende un post(getPost) e successivamente metta in maiusolo(toUpperCase) il titolo
 
 // getPost :: Int -> Future({id: Int, title: String})
 var getPost = function (i) {
@@ -789,10 +789,10 @@ var ex5 = undefined
 
 
 
-// Exercise 6
+// Esercizio 6
 // ==========
-// Write a function that uses checkActive() and showWelcome() to grant access
-// or return the error
+// Scrivi una funzione che usi checkActive() e showWelcome() per garantire l' accesso
+// oppure restituisce un errore
 
 var showWelcome = _.compose(_.add( "Welcome "), _.prop('name'))
 
@@ -804,10 +804,10 @@ var ex6 = undefined
 
 
 
-// Exercise 7
+// Esercizio 7
 // ==========
-// Write a validation function that checks for a length > 3. It should return
-// Right(x) if it is greater than 3 and Left("You need > 3") otherwise
+// scrivi una funzione di validazione che controlli la lunghezza > 3. Deve restituire
+// Right(x) se è maggiore di 3 e Left("You need > 3") altrimenti.
 
 var ex7 = function(x) {
   return undefined // <--- write me. (don't be pointfree)
@@ -815,11 +815,12 @@ var ex7 = function(x) {
 
 
 
-// Exercise 8
+// Esercizio 8
 // ==========
-// Use ex7 above and Either as a functor to save the user if they are valid or
-// return the error message string. Remember either's two arguments must return
-// the same type.
+// Usa l' esercizio 7 e Either come funtore per salvare l' utentza se è valida oppure
+// ritorna una stringa con il messaggio di errore.
+// Ricorda i due argomenti di Either devono essere dello stesso tipo.
+
 
 var save = function(x){
   return new IO(function(){
